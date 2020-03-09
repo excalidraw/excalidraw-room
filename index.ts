@@ -8,7 +8,7 @@ const app = express();
 const port = process.env.PORT || 8080; // default port to listen
 
 app.get('/', (req, res) => {
-  res.send('Hi, there!');
+  res.send('Hi, collab!');
 });
 
 const server = http.createServer(app);

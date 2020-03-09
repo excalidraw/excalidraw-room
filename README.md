@@ -3,7 +3,7 @@
 ## Requirements
 
 - [Node.js](https://nodejs.org/en/)
-- [Google Cloud SDK](https://cloud.google.com/sdk/install)
+- [Google Cloud SDK](https://cloud.google.com/sdk/?hl=en_US)
 
 ## Install
 

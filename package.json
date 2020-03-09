@@ -1,0 +1,13 @@
+{
+  "name": "excalidraw-io",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "gcloud app deploy --project=excalidraw-io",
+    "start": "node index.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "4.17.1"
+  }
+}

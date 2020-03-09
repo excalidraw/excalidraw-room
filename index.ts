@@ -36,7 +36,7 @@ io.on('connection', socket => {
     console.log(`${socket.id} has joined ${roomID}`);
     socket.join(roomID);
     if (io.sockets.adapter.rooms[roomID].length <= 1) {
-      io.to(`${socket.id}`).emit('new-user-first-in-room');
+      io.to(`${socket.id}`).emit('first-in-room');
     } else {
       socket.broadcast.to(roomID).emit('new-user', socket.id);
     }
@@ -45,22 +45,10 @@ io.on('connection', socket => {
       io.sockets.adapter.rooms[roomID].length,
     );
   });
-  socket.on(
-    'new-user-send-update',
-    (socketID: string, encryptedData: ArrayBuffer) => {
-      console.log(`sending new user update to ${socketID}`);
-      io.to(`${socketID}`).emit('new-user-receive-update', encryptedData);
-    },
-  );
-  socket.on('send-update', (roomID, encryptedData) => {
+
+  socket.on('server-broadcast', (roomID: string, encryptedData: ArrayBuffer, iv: Uint8Array) => {
     console.log(`${socket.id} sends update to ${roomID}`);
-    socket.broadcast.to(roomID).emit('receive-update', encryptedData);
-  });
-  socket.on('send-mouse-location', (roomID, pointerCoords) => {
-    console.log(`${socket.id} sends mouse update to ${roomID}`);
-    socket.broadcast
-      .to(roomID)
-      .emit('receive-mouse-location', socket.id, pointerCoords);
+    socket.broadcast.to(roomID).emit('client-broadcast', encryptedData, iv);
   });
 
   socket.on('disconnecting', () => {

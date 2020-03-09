@@ -10,7 +10,7 @@
     "@types/socket.io": "2.1.4"
   },
   "engines": {
-    "node": "12.x.x"
+    "node": "10.x.x"
   },
   "license": "MIT",
   "main": "index.js",

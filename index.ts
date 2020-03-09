@@ -1,13 +1,17 @@
 // source: https://github.com/idlewinn/collab-server/blob/master/src/index.ts
 
 import express from 'express';
-import https from 'https';
+import http from 'http';
 import socketIO from 'socket.io';
 
 const app = express();
 const port = process.env.PORT || 8080; // default port to listen
 
-const server = https.createServer(app);
+app.get('/', (req, res) => {
+  res.send('Hi, there!');
+});
+
+const server = http.createServer(app);
 
 server.listen(port, () => {
   console.log(`listening on port: ${port}`);

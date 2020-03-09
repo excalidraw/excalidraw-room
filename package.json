@@ -12,9 +12,6 @@
     "lint-staged": "10.0.8",
     "prettier": "1.19.1"
   },
-  "engines": {
-    "node": "10.x.x"
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"

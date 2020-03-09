@@ -12,10 +12,10 @@
   },
   "license": "MIT",
   "main": "index.js",
-  "name": "excalidraw-io",
+  "name": "excalidraw-room",
   "scripts": {
     "build": "yarn gcp-build",
-    "deploy": "gcloud app deploy --project=excalidraw-io",
+    "deploy": "gcloud app deploy --project=excalidraw-room",
     "gcp-build": "tsc -p .",
     "prepare": "yarn gcp-build",
     "pretest": "yarn gcp-build",

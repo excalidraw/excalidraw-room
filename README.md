@@ -1,4 +1,4 @@
-# excalidraw-io
+# excalidraw-room
 
 ## Requirements
 
@@ -25,7 +25,7 @@ yarn start
 
 ## Deploy
 
-Make sure you have access to the [`excalidraw-io`](https://console.cloud.google.com/home/dashboard?project=excalidraw-io) project.
+Make sure you have access to the [`excalidraw-room`](https://console.cloud.google.com/home/dashboard?project=excalidraw-room) project.
 
 ```
 yarn deploy

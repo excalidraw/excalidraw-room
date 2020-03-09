@@ -1,11 +1,9 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
+// source: https://github.com/idlewinn/collab-server/blob/master/src/index.ts
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = __importDefault(require("express"));
-var https_1 = __importDefault(require("https"));
-var socket_io_1 = __importDefault(require("socket.io"));
+var express_1 = require("express");
+var https_1 = require("https");
+var socket_io_1 = require("socket.io");
 var app = express_1.default();
 var port = process.env.PORT || 80; // default port to listen
 var server = https_1.default.createServer(app);

@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -p .",
-    "deploy": "gcloud app deploy --project=excalidraw-io",
+    "deploy": "yarn build && gcloud app deploy --project=excalidraw-io",
     "start": "node index.js"
   },
   "license": "MIT",

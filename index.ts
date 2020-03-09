@@ -5,7 +5,7 @@ import http from 'http';
 import socketIO from 'socket.io';
 
 const app = express();
-const port = process.env.PORT || 8080; 
+const port = process.env.PORT || 8080;
 
 app.get('/', (req, res) => {
   res.send('Hi, collab!');

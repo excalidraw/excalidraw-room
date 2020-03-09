@@ -16,7 +16,7 @@
     "gcp-build": "tsc -p .",
     "prepare": "npm run gcp-build",
     "pretest": "npm run gcp-build",
-    "start": "yarn gcp-build && node index.js"
+    "start": "yarn gcp-build && node ./index.js"
   },
   "version": "1.0.0"
 }

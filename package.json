@@ -16,7 +16,7 @@
   "main": "index.js",
   "name": "excalidraw-io",
   "scripts": {
-    "deploy": "yarn gcp-build && gcloud app deploy --project=excalidraw-io",
+    "deploy": "gcloud app deploy --project=excalidraw-io",
     "gcp-build": "tsc -p .",
     "prepare": "npm run gcp-build",
     "pretest": "npm run gcp-build",

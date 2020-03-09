@@ -1,9 +1,7 @@
 {
   "dependencies": {
     "express": "4.17.1",
-    "typescript": "3.8.3"
-  },
-  "devDependencies": {
+    "typescript": "3.8.3",
     "@types/express": "4.17.3",
     "@types/node": "13.9.0"
   },
@@ -16,9 +14,9 @@
   "scripts": {
     "deploy": "gcloud app deploy --project=excalidraw-io",
     "gcp-build": "tsc -p .",
-    "prepare": "npm run gcp-build",
-    "pretest": "npm run gcp-build",
-    "start": "yarn gcp-build && node ./index.js"
+    "prepare": "yarn gcp-build",
+    "pretest": "yarn gcp-build",
+    "start": "node ./index.js"
   },
   "version": "1.0.0"
 }

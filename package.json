@@ -1,13 +1,11 @@
 {
   "dependencies": {
     "express": "4.17.1",
-    "socket.io": "2.3.0",
     "typescript": "3.8.3"
   },
   "devDependencies": {
     "@types/express": "4.17.3",
-    "@types/node": "13.9.0",
-    "@types/socket.io": "2.1.4"
+    "@types/node": "13.9.0"
   },
   "engines": {
     "node": "10.x.x"

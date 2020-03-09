@@ -1,5 +1,3 @@
-// source: https://github.com/idlewinn/collab-server/blob/master/src/index.ts
-
 import express from 'express';
 
 const app = express();

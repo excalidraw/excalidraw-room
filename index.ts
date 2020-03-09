@@ -5,7 +5,7 @@ import https from 'https';
 import socketIO from 'socket.io';
 
 const app = express();
-const port = process.env.PORT || 80; // default port to listen
+const port = process.env.PORT || 8080; // default port to listen
 
 const server = https.createServer(app);
 

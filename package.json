@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc -p .",
     "deploy": "yarn build && gcloud app deploy --project=excalidraw-io",
-    "start": "node index.js"
+    "start": "yarn build && node index.js"
   },
   "license": "MIT",
   "dependencies": {

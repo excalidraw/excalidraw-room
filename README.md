@@ -4,7 +4,7 @@ The backend for collaboration in [Excalidraw](https://excalidraw.com).
 
 ## Requirements
 
-- [Node.js](https://nodejs.org/)
+- [Node.js](https://nodejs.org)
 - [Google Cloud SDK](https://cloud.google.com/sdk/)
 
 ## Install dependencies

@@ -33,7 +33,7 @@
     "prepare": "yarn gcp-build",
     "pretest": "yarn gcp-build",
     "prettier": "prettier \"**/*.{ts,md,json,yaml,yml}\"",
-    "start": "node ./index.js",
+    "start": "yarn build && node ./index.js",
     "test": "yarn prettier --list-different"
   },
   "version": "1.0.0"

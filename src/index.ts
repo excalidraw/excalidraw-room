@@ -1,15 +1,9 @@
-// source: https://github.com/idlewinn/collab-server/blob/master/src/index.ts
-
 import express from "express";
-import http from "http";
+import http, { ServerResponse } from "http";
 import socketIO from "socket.io";
 
 const app = express();
-const port = process.env.PORT || 8080;
-
-app.get("/", (req, res) => {
-  res.send("Hi, excalidraw-room!");
-});
+const port = process.env.PORT || 80; // default port to listen
 
 const server = http.createServer(app);
 
@@ -46,13 +40,10 @@ io.on("connection", socket => {
     );
   });
 
-  socket.on(
-    "server-broadcast",
-    (roomID: string, encryptedData: ArrayBuffer, iv: Uint8Array) => {
-      console.log(`${socket.id} sends update to ${roomID}`);
-      socket.broadcast.to(roomID).emit("client-broadcast", encryptedData, iv);
-    }
-  );
+  socket.on("server-broadcast", (roomID: string, encryptedData: ArrayBuffer, iv: Uint8Array) => {
+    console.log(`${socket.id} sends update to ${roomID}`);
+    socket.broadcast.to(roomID).emit("client-broadcast", encryptedData, iv);
+  });
 
   socket.on("disconnecting", () => {
     const rooms = io.sockets.adapter.rooms;

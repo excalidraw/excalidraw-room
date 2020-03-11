@@ -30,11 +30,12 @@
     "deploy": "gcloud app deploy --project=excalidraw-room",
     "fix": "yarn prettier --write",
     "gcp-build": "tsc -p .",
+    "lint": "yarn prettier --list-different",
     "prepare": "yarn gcp-build",
     "pretest": "yarn gcp-build",
     "prettier": "prettier \"**/*.{ts,md,json,yaml,yml}\"",
     "start": "yarn build && node ./index.js",
-    "test": "yarn prettier --list-different"
+    "test": "yarn lint"
   },
   "version": "1.0.0"
 }

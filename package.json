@@ -34,7 +34,8 @@
     "prepare": "yarn gcp-build",
     "pretest": "yarn gcp-build",
     "prettier": "prettier \"**/*.{ts,md,json,yaml,yml}\"",
-    "start": "node ./index.js"
+    "start": "node ./index.js",
+    "test": "yarn lint"
   },
   "version": "1.0.0"
 }

@@ -35,8 +35,8 @@ io.on("connection", socket => {
       socket.broadcast.to(roomID).emit("new-user", socket.id);
     }
     io.in(roomID).emit(
-      "room-user-count",
-      io.sockets.adapter.rooms[roomID].length
+      "room-user-change",
+      Object.keys(io.sockets.adapter.rooms[roomID].sockets)
     );
   });
 
@@ -48,9 +48,11 @@ io.on("connection", socket => {
   socket.on("disconnecting", () => {
     const rooms = io.sockets.adapter.rooms;
     for (const roomID in socket.rooms) {
-      const remaining = rooms[roomID].length - 1;
-      if (remaining > 0) {
-        socket.broadcast.to(roomID).emit("room-user-count", remaining);
+      const clients = Object.keys(rooms[roomID].sockets).filter(
+        id => id !== socket.id
+      );
+      if (clients.length > 0) {
+        socket.broadcast.to(roomID).emit("room-user-change", clients);
       }
     }
   });

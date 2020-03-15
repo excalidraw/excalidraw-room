@@ -45,6 +45,11 @@ io.on("connection", socket => {
     socket.broadcast.to(roomID).emit("client-broadcast", encryptedData, iv);
   });
 
+  socket.on("server-volatile-broadcast", (roomID: string, encryptedData: ArrayBuffer, iv: Uint8Array) => {
+    console.log(`${socket.id} sends volatile update to ${roomID}`);
+    socket.volatile.broadcast.to(roomID).emit("client-broadcast", encryptedData, iv);
+  });
+
   socket.on("disconnecting", () => {
     const rooms = io.sockets.adapter.rooms;
     for (const roomID in socket.rooms) {

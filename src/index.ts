@@ -40,10 +40,13 @@ io.on("connection", socket => {
     );
   });
 
-  socket.on("server-broadcast", (roomID: string, encryptedData: ArrayBuffer, iv: Uint8Array) => {
-    console.log(`${socket.id} sends update to ${roomID}`);
-    socket.broadcast.to(roomID).emit("client-broadcast", encryptedData, iv);
-  });
+  socket.on(
+    "server-broadcast",
+    (roomID: string, encryptedData: ArrayBuffer, iv: Uint8Array) => {
+      console.log(`${socket.id} sends update to ${roomID}`);
+      socket.broadcast.to(roomID).emit("client-broadcast", encryptedData, iv);
+    }
+  );
 
   socket.on("disconnecting", () => {
     const rooms = io.sockets.adapter.rooms;

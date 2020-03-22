@@ -1,6 +1,11 @@
 import express from "express";
 import http, { ServerResponse } from "http";
 import socketIO from "socket.io";
+import debug from "debug";
+
+const serverDebug = debug("server");
+const ioDebug = debug("io");
+const socketDebug = debug("socket");
 
 const app = express();
 const port = process.env.PORT || 80; // default port to listen
@@ -8,7 +13,7 @@ const port = process.env.PORT || 80; // default port to listen
 const server = http.createServer(app);
 
 server.listen(port, () => {
-  console.log(`listening on port: ${port}`);
+  serverDebug(`listening on port: ${port}`);
 });
 
 const io = socketIO(server, {
@@ -24,10 +29,10 @@ const io = socketIO(server, {
 });
 
 io.on("connection", socket => {
-  console.log("connection established!");
+  ioDebug("connection established!");
   io.to(`${socket.id}`).emit("init-room");
   socket.on("join-room", roomID => {
-    console.log(`${socket.id} has joined ${roomID}`);
+    socketDebug(`${socket.id} has joined ${roomID}`);
     socket.join(roomID);
     if (io.sockets.adapter.rooms[roomID].length <= 1) {
       io.to(`${socket.id}`).emit("first-in-room");
@@ -43,8 +48,18 @@ io.on("connection", socket => {
   socket.on(
     "server-broadcast",
     (roomID: string, encryptedData: ArrayBuffer, iv: Uint8Array) => {
-      console.log(`${socket.id} sends update to ${roomID}`);
+      socketDebug(`${socket.id} sends update to ${roomID}`);
       socket.broadcast.to(roomID).emit("client-broadcast", encryptedData, iv);
+    }
+  );
+
+  socket.on(
+    "server-volatile-broadcast",
+    (roomID: string, encryptedData: ArrayBuffer, iv: Uint8Array) => {
+      socketDebug(`${socket.id} sends volatile update to ${roomID}`);
+      socket.volatile.broadcast
+        .to(roomID)
+        .emit("client-broadcast", encryptedData, iv);
     }
   );
 

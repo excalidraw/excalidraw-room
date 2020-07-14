@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:12-alpine
 
 WORKDIR /excalidraw-room
 

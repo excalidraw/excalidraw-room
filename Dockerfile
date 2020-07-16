@@ -3,8 +3,7 @@ FROM node:12-alpine
 WORKDIR /excalidraw-room
 
 COPY package.json yarn.lock ./
-COPY scripts ./scripts
-RUN SKIP_YARN_POSTINSTALL=true yarn
+RUN yarn
 
 COPY tsconfig.json ./
 COPY src ./src

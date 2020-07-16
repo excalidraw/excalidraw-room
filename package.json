@@ -7,7 +7,6 @@
     "build": "tsc",
     "fix": "yarn prettier --write",
     "lint": "yarn prettier --list-different",
-    "postinstall": "node scripts/postinstall.js",
     "prettier": "prettier \"**/*.{ts,md,json,yaml,yml}\"",
     "start": "node dist/index.js",
     "test": "yarn lint"
@@ -40,9 +39,6 @@
     "typescript": "3.9.5"
   },
   "eslintConfig": {
-    "env": {
-      "es6": true
-    },
     "extends": [
       "prettier"
     ],

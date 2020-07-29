@@ -7,7 +7,6 @@
     "build": "tsc",
     "fix": "yarn prettier --write",
     "lint": "yarn prettier --list-different",
-    "postinstall": "npm run build",
     "prettier": "prettier \"**/*.{ts,md,json,yaml,yml}\"",
     "start": "node dist/index.js",
     "test": "yarn lint"

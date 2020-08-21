@@ -24,7 +24,7 @@
   "homepage": "https://github.com/excalidraw/excalidraw-room#readme",
   "dependencies": {
     "debug": "4.1.1",
-    "eslint": "7.3.1",
+    "eslint": "7.7.0",
     "eslint-config-prettier": "6.11.0",
     "eslint-plugin-prettier": "3.1.4",
     "express": "4.17.1",

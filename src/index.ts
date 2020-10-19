@@ -17,13 +17,13 @@ server.listen(port, () => {
 });
 
 const io = socketIO(server, {
-  handlePreflightRequest: function (req, res) {
+  handlePreflightRequest: function (server, req, res) {
     var headers = {
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
-      "Access-Control-Allow-Origin": req.header ? req.header.origin : "*",
-      "Access-Control-Allow-Credentials": true,
+      "Access-Control-Allow-Origin": req.headers ? req.headers.origin : "*",
+      "Access-Control-Allow-Credentials": "true",
     };
-    res.writeHead(200, headers);
+    res.writeHead(200, 'cors', headers);
     res.end();
   },
 });

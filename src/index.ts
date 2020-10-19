@@ -23,7 +23,7 @@ const io = socketIO(server, {
       "Access-Control-Allow-Origin": req.headers ? req.headers.origin : "*",
       "Access-Control-Allow-Credentials": "true",
     };
-    res.writeHead(200, 'cors', headers);
+    res.writeHead(200, headers);
     res.end();
   },
 });

@@ -1,6 +1,6 @@
 {
   "name": "excalidraw-room",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Excalidraw collaboration server",
   "main": "index.js",
   "scripts": {

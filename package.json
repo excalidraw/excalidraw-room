@@ -29,7 +29,7 @@
     "eslint-plugin-prettier": "3.1.4",
     "express": "4.17.1",
     "prettier": "2.0.5",
-    "socket.io": "2.3.0"
+    "socket.io": "3.0.3"
   },
   "devDependencies": {
     "@types/socket.io": "2.1.4",

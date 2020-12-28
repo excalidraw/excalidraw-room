@@ -20,7 +20,6 @@ server.listen(port, () => {
   serverDebug(`listening on port: ${port}`);
 });
 
-
 const io = socketIO(server, {
   handlePreflightRequest: function (req, res) {
     var headers = {

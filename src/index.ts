@@ -10,11 +10,16 @@ const socketDebug = debug("socket");
 const app = express();
 const port = process.env.PORT || 80; // default port to listen
 
+app.get("/", (req, res) => {
+  res.send("Excalidraw collab server is up :)");
+});
+
 const server = http.createServer(app);
 
 server.listen(port, () => {
   serverDebug(`listening on port: ${port}`);
 });
+
 
 const io = socketIO(server, {
   handlePreflightRequest: function (req, res) {

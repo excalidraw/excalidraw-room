@@ -11,7 +11,7 @@ const app = express();
 const port = process.env.PORT || 80; // default port to listen
 
 app.get("/", (req, res) => {
-  res.send("Excalidraw collab server is up :)");
+  res.send("Excalidraw collaboration server is up :)");
 });
 
 const server = http.createServer(app);

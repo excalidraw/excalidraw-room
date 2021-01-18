@@ -1,10 +1,10 @@
-name: Lint
+name: Test
 
 on:
   push:
 
 jobs:
-  lint:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,5 +18,5 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      - name: Lint
-        run: yarn lint
+      - name: Test
+        run: yarn test

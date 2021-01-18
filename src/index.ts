@@ -1,7 +1,7 @@
-import express from "express";
-import http, { ServerResponse } from "http";
-import socketIO from "socket.io";
 import debug from "debug";
+import express from "express";
+import http from "http";
+import socketIO from "socket.io";
 
 const serverDebug = debug("server");
 const ioDebug = debug("io");

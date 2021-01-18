@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "fix": "yarn prettier --write",
+    "format": "yarn prettier --write",
     "lint": "yarn prettier --list-different",
     "prettier": "prettier \"**/*.{ts,md,json,yaml,yml}\"",
     "start": "node dist/index.js",
@@ -24,9 +24,6 @@
   "homepage": "https://github.com/excalidraw/excalidraw-room#readme",
   "dependencies": {
     "debug": "4.3.1",
-    "eslint": "7.3.1",
-    "eslint-config-prettier": "7.0.0",
-    "eslint-plugin-prettier": "3.3.1",
     "express": "4.17.1",
     "prettier": "2.2.1",
     "socket.io": "2.3.0"
@@ -37,36 +34,5 @@
     "@types/express": "4.17.11",
     "@types/node": "14.14.12",
     "typescript": "4.1.3"
-  },
-  "eslintConfig": {
-    "extends": [
-      "prettier"
-    ],
-    "plugins": [
-      "prettier"
-    ],
-    "rules": {
-      "curly": "warn",
-      "no-console": [
-        "warn",
-        {
-          "allow": [
-            "warn",
-            "error",
-            "info"
-          ]
-        }
-      ],
-      "no-else-return": "warn",
-      "no-useless-return": "warn",
-      "prefer-const": [
-        "warn",
-        {
-          "destructuring": "all"
-        }
-      ],
-      "prefer-template": "warn",
-      "prettier/prettier": "warn"
-    }
   }
 }

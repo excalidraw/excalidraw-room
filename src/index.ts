@@ -21,7 +21,7 @@ server.listen(port, () => {
 });
 
 const io = socketIO(server, {
-  handlePreflightRequest: function (req: Request, res: Response) {
+  handlePreflightRequest: function (req, res) {
     var headers = {
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
       "Access-Control-Allow-Origin": "*",

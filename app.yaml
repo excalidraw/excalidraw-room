@@ -1,4 +1,4 @@
-runtime: nodejs14
+runtime: nodejs
 env: flex
 
 # https://cloud.google.com/appengine/docs/flexible/nodejs/configuring-your-app-with-app-yaml

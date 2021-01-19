@@ -1,4 +1,4 @@
-name: Test
+name: Test & Build
 
 on:
   push:
@@ -18,5 +18,7 @@ jobs:
       - name: Install dependencies
         run: yarn
 
-      - name: Test
-        run: yarn test
+      - name: Test and Build
+        run: |
+          yarn test
+          yarn build

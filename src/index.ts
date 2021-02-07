@@ -10,6 +10,8 @@ const socketDebug = debug("socket");
 const app = express();
 const port = process.env.PORT || 80; // default port to listen
 
+app.use(express.static("public"));
+
 app.get("/", (req, res) => {
   res.send("Excalidraw collaboration server is up :)");
 });

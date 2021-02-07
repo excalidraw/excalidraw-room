@@ -24,7 +24,7 @@ server.listen(port, () => {
 
 const io = socketIO(server, {
   handlePreflightRequest: function (req, res) {
-    var headers = {
+    const headers = {
       "Access-Control-Allow-Headers": "Content-Type, Authorization",
       "Access-Control-Allow-Origin":
         (req.header && req.header.origin) || "https://excalidraw.com",

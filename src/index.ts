@@ -48,7 +48,7 @@ io.on("connection", (socket) => {
     }
     io.in(roomID).emit(
       "room-user-change",
-      Object.keys(io.sockets.adapter.rooms[roomID].sockets)
+      Object.keys(io.sockets.adapter.rooms[roomID].sockets),
     );
   });
 
@@ -57,7 +57,7 @@ io.on("connection", (socket) => {
     (roomID: string, encryptedData: ArrayBuffer, iv: Uint8Array) => {
       socketDebug(`${socket.id} sends update to ${roomID}`);
       socket.broadcast.to(roomID).emit("client-broadcast", encryptedData, iv);
-    }
+    },
   );
 
   socket.on(
@@ -67,14 +67,14 @@ io.on("connection", (socket) => {
       socket.volatile.broadcast
         .to(roomID)
         .emit("client-broadcast", encryptedData, iv);
-    }
+    },
   );
 
   socket.on("disconnecting", () => {
     const rooms = io.sockets.adapter.rooms;
     for (const roomID in socket.rooms) {
       const clients = Object.keys(rooms[roomID].sockets).filter(
-        (id) => id !== socket.id
+        (id) => id !== socket.id,
       );
       if (clients.length > 0) {
         socket.broadcast.to(roomID).emit("room-user-change", clients);

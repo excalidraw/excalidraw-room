@@ -43,10 +43,10 @@
   resolved "https://registry.yarnpkg.com/@excalidraw/eslint-config/-/eslint-config-1.0.0.tgz#1cc527a88cfe20fd730496c1b631c3aecf9c825e"
   integrity sha512-5SQFsQXO4vzny7OFSJr/DDPr1Mzeh6w0uwmZ0Fk2qjBcS5nhPtnx5KOTRPmpc6Hf5Ao57WK/MKI4lhCzw66V/A==
 
-"@excalidraw/prettier-config@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@excalidraw/prettier-config/-/prettier-config-1.0.1.tgz#e7dd900993fe2f4442196805c124b43d9e361be5"
-  integrity sha512-AktpMzImIKlIfd0WYfuMcBovPL8C56LZdMqc7om05l8F3AjH0lffUctqQr3uu9e3t8NIZM7tEIZsiqZ+XO0fRQ==
+"@excalidraw/prettier-config@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@excalidraw/prettier-config/-/prettier-config-1.0.2.tgz#b7c061c99cee2f78b9ca470ea1fbd602683bba65"
+  integrity sha512-rFIq8+A8WvkEzBsF++Rw6gzxE+hU3ZNkdg8foI+Upz2y/rOC/gUpWJaggPbCkoH3nlREVU59axQjZ1+F6ePRGg==
 
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"
@@ -463,7 +463,7 @@ chalk@^4.0.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chokidar@^3.4.0:
+chokidar@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.1.tgz#ee9ce7bbebd2b79f49f304799d5468e31e14e68a"
   integrity sha512-9+s+Od+W0VJJzawDma/gvBNQqkTiqYTWLuZoyAsivsI4AaWTCzHG06/TMjsf1cYe9Cb97UCEhjz7HvnPk2p/tw==
@@ -2009,12 +2009,12 @@ trim-newlines@^1.0.0:
   resolved "https://registry.yarnpkg.com/trim-newlines/-/trim-newlines-1.0.0.tgz#5887966bb582a4503a41eb524f7d35011815a613"
   integrity sha1-WIeWa7WCpFA6QetST301ARgVphM=
 
-ts-node-dev@1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/ts-node-dev/-/ts-node-dev-1.1.1.tgz#b7602929395b1616b4aa99a3be0a4e121742283d"
-  integrity sha512-kAO8LUZgXZSY0+PucMPsQ0Bbdv0x+lgbN7j8gcD4PuTI4uKC6YchekaspmYTBNilkiu+rQYkWJA7cK+Q8/B0tQ==
+ts-node-dev@1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/ts-node-dev/-/ts-node-dev-1.1.6.tgz#ee2113718cb5a92c1c8f4229123ad6afbeba01f8"
+  integrity sha512-RTUi7mHMNQospArGz07KiraQcdgUVNXKsgO2HAi7FoiyPMdTDqdniB6K1dqyaIxT7c9v/VpSbfBZPS6uVpaFLQ==
   dependencies:
-    chokidar "^3.4.0"
+    chokidar "^3.5.1"
     dateformat "~1.0.4-1.2.3"
     dynamic-dedupe "^0.3.0"
     minimist "^1.2.5"
@@ -2080,10 +2080,10 @@ type-is@~1.6.17, type-is@~1.6.18:
     media-typer "0.3.0"
     mime-types "~2.1.24"
 
-typescript@4.1.5:
-  version "4.1.5"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.1.5.tgz#123a3b214aaff3be32926f0d8f1f6e704eb89a72"
-  integrity sha512-6OSu9PTIzmn9TCDiovULTnET6BgXtDYL4Gg4szY+cGsc3JP1dQL8qvE8kShTRx1NIw4Q9IBHlwODjkjWEtMUyA==
+typescript@4.2.2:
+  version "4.2.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.2.2.tgz#1450f020618f872db0ea17317d16d8da8ddb8c4c"
+  integrity sha512-tbb+NVrLfnsJy3M59lsDgrzWIflR4d4TIUjz+heUnHZwdF7YsrMTKoRERiIvI2lvBG95dfpLxB21WZhys1bgaQ==
 
 unpipe@1.0.0, unpipe@~1.0.0:
   version "1.0.0"

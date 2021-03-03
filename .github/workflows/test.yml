@@ -6,19 +6,15 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v1
-
       - name: Setup Node.js 14.x
         uses: actions/setup-node@v1
         with:
           node-version: 14.x
-
       - name: Install dependencies
-        run: yarn
-
+        run: yarn --frozen-lockfile
       - name: Test and Build
         run: |
-          yarn test
+          yarn test:code
           yarn build

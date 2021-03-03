@@ -1,5 +1,10 @@
 {
   "dependencies": {
+    "debug": "4.3.1",
+    "express": "4.17.1",
+    "socket.io": "2.3.0"
+  },
+  "devDependencies": {
     "@excalidraw/eslint-config": "1.0.0",
     "@excalidraw/prettier-config": "1.0.2",
     "@types/debug": "4.1.5",
@@ -8,13 +13,10 @@
     "@types/socket.io": "2.1.4",
     "@typescript-eslint/eslint-plugin": "4.16.1",
     "@typescript-eslint/parser": "4.16.1",
-    "debug": "4.3.1",
     "eslint": "7.21.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-prettier": "3.3.1",
-    "express": "4.17.1",
     "prettier": "2.2.1",
-    "socket.io": "2.3.0",
     "ts-node-dev": "1.1.6",
     "typescript": "4.2.2"
   },
@@ -24,12 +26,13 @@
   "prettier": "@excalidraw/prettier-config",
   "scripts": {
     "build": "tsc",
+    "deploy": "yarn build && gcloud app deploy --project=excalidraw-portal",
     "fix:code": "yarn test:code --fix",
     "fix:other": "yarn prettier --write",
     "fix": "yarn fix:other && yarn fix:code",
     "prettier": "prettier . --ignore-path=.gitignore",
-    "start": "node dist/index.js",
     "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "start": "node dist/index.js",
     "test:code": "eslint --ext .ts .",
     "test:other": "yarn prettier --list-different",
     "test": "yarn test:other && yarn test:code"

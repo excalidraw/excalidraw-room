@@ -1,0 +1,6 @@
+.gcloudignore
+.git
+.gitignore
+.github/
+node_modules/
+src/

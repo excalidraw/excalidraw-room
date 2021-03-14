@@ -73,11 +73,15 @@ io.on("connection", (socket) => {
   socket.on("disconnecting", () => {
     const rooms = io.sockets.adapter.rooms;
     for (const roomID in socket.rooms) {
-      const clients = Object.keys(rooms[roomID].sockets).filter(
+      const roomSockets = Object.keys(rooms[roomID].sockets);
+      if (!roomSockets.includes(socket.id)) {
+        continue;
+      }
+      const remainingClients = Object.keys(rooms[roomID].sockets).filter(
         (id) => id !== socket.id,
       );
-      if (clients.length > 0) {
-        socket.broadcast.to(roomID).emit("room-user-change", clients);
+      if (remainingClients.length > 0) {
+        socket.broadcast.to(roomID).emit("room-user-change", remainingClients);
       }
     }
   });

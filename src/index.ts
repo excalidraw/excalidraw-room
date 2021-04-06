@@ -1,7 +1,7 @@
 import debug from "debug";
 import express from "express";
 import http from "http";
-import socketIO from "socket.io";
+import {Server as socketIO} from "socket.io";
 
 const serverDebug = debug("server");
 const ioDebug = debug("io");
@@ -22,17 +22,15 @@ server.listen(port, () => {
   serverDebug(`listening on port: ${port}`);
 });
 
-const io = socketIO(server, {
-  handlePreflightRequest: (req, res) => {
-    const headers = {
-      "Access-Control-Allow-Headers": "Content-Type, Authorization",
-      "Access-Control-Allow-Origin":
-        (req.header && req.header.origin) || "https://excalidraw.com",
-      "Access-Control-Allow-Credentials": true,
-    };
-    res.writeHead(200, headers);
-    res.end();
-  },
+const io = new socketIO(server, {
+  allowEIO3: true, // backward compat with v2 clients
+  cors: {
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+    origin: (origin, callback) => {
+      return callback(null, origin || "https://excalidraw.com")
+    }
+  }
 });
 
 io.on("connection", (socket) => {
@@ -41,14 +39,14 @@ io.on("connection", (socket) => {
   socket.on("join-room", (roomID) => {
     socketDebug(`${socket.id} has joined ${roomID}`);
     socket.join(roomID);
-    if (io.sockets.adapter.rooms[roomID].length <= 1) {
+    if (io.sockets.adapter.rooms.get(roomID)!.size <= 1) {
       io.to(`${socket.id}`).emit("first-in-room");
     } else {
       socket.broadcast.to(roomID).emit("new-user", socket.id);
     }
     io.in(roomID).emit(
       "room-user-change",
-      Object.keys(io.sockets.adapter.rooms[roomID].sockets),
+      Array.from(io.sockets.adapter.rooms.get(roomID)?.values() || []),
     );
   });
 
@@ -72,10 +70,10 @@ io.on("connection", (socket) => {
 
   socket.on("disconnecting", () => {
     const rooms = io.sockets.adapter.rooms;
-    for (const roomID in socket.rooms) {
-      const clients = Object.keys(rooms[roomID].sockets).filter(
+    for (const roomID of socket.rooms) {
+      const clients = Array.from(rooms.get(roomID)?.values() || []).filter(
         (id) => id !== socket.id,
-      );
+        );
       if (clients.length > 0) {
         socket.broadcast.to(roomID).emit("room-user-change", clients);
       }

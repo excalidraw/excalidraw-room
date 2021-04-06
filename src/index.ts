@@ -1,7 +1,7 @@
 import debug from "debug";
 import express from "express";
 import http from "http";
-import {Server as socketIO} from "socket.io";
+import { Server as socketIO } from "socket.io";
 
 const serverDebug = debug("server");
 const ioDebug = debug("io");
@@ -23,14 +23,14 @@ server.listen(port, () => {
 });
 
 const io = new socketIO(server, {
-  allowEIO3: true, // backward compat with v2 clients
+  allowEIO3: true, // backwards compat with v2 clients
   cors: {
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
     origin: (origin, callback) => {
-      return callback(null, origin || "https://excalidraw.com")
-    }
-  }
+      return callback(null, origin || "https://excalidraw.com");
+    },
+  },
 });
 
 io.on("connection", (socket) => {
@@ -73,7 +73,7 @@ io.on("connection", (socket) => {
     for (const roomID of socket.rooms) {
       const clients = Array.from(rooms.get(roomID)?.values() || []).filter(
         (id) => id !== socket.id,
-        );
+      );
       if (clients.length > 0) {
         socket.broadcast.to(roomID).emit("room-user-change", clients);
       }

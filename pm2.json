@@ -2,10 +2,7 @@
   "name": "webex-collab-dev",
   "script": "./dist/index.js",
   "watch": ["src/"],
-  "ignore_watch": [
-    "node_modules",
-    "public"
-  ],
+  "ignore_watch": ["node_modules", "public"],
   "autorestart": false,
   "exec_mode": "fork_mode",
   "instances": 1,

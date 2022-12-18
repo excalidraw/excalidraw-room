@@ -4,7 +4,7 @@
     "@excalidraw/prettier-config": "1.0.2",
     "@types/debug": "4.1.5",
     "@types/express": "4.17.11",
-    "@types/node": "14.14.31",
+    "@types/node": "18.11.17",
     "@types/socket.io": "2.1.4",
     "@typescript-eslint/eslint-plugin": "4.16.1",
     "@typescript-eslint/parser": "4.16.1",

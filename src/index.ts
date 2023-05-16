@@ -14,7 +14,8 @@ require("dotenv").config(
 );
 
 const app = express();
-const port = process.env.PORT || 80; // default port to listen
+const port =
+  process.env.PORT || process.env.NODE_ENV !== "development" ? 80 : 3002; // default port to listen
 
 app.use(express.static("public"));
 
@@ -37,16 +38,6 @@ try {
       credentials: true,
     },
     allowEIO3: true,
-    // handlePreflightRequest: (req, res) => {
-    //   const headers = {
-    //     "Access-Control-Allow-Headers": "Content-Type, Authorization",
-    //     "Access-Control-Allow-Origin":
-    //       (req.header && req.header.origin) || "https://excalidraw.com",
-    //     "Access-Control-Allow-Credentials": true,
-    //   };
-    //   res.writeHead(200, headers);
-    //   res.end();
-    // },
   });
 
   io.on("connection", (socket) => {

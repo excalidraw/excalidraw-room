@@ -1,0 +1,15 @@
+{
+  "name": "excalidraw-collab",
+  "script": "./dist/index.js",
+  "ignore_watch": ["node_modules", "public"],
+  "max_memory_restart": "4G",
+  "watch": false,
+  "wait_ready": true,
+  "log_date_format": "YYYY-MM-DD HH:mm Z",
+  "autorestart": true,
+  "exec_mode": "fork_mode",
+  "instances": 1,
+  "env": {
+    "NODE_ENV": "production"
+  }
+}

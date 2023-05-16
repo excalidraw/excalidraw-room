@@ -1,5 +1,5 @@
 {
-  "name": "webex-collab-dev",
+  "name": "excalidraw-collab-dev",
   "script": "./dist/index.js",
   "watch": ["src/"],
   "ignore_watch": ["node_modules", "public"],

@@ -2,6 +2,10 @@ import debug from "debug";
 import express from "express";
 import http from "http";
 import socketIO from "socket.io";
+// @ts-ignore
+import redisAdapter from 'socket.io-redis';
+// @ts-ignore
+import redis from 'redis';
 
 const serverDebug = debug("server");
 const ioDebug = debug("io");
@@ -40,6 +44,13 @@ const io = socketIO(server, {
     res.end();
   },
 });
+
+if (process.env.REDIS_HOST && process.env.REDIS_PORT) {
+  const pubClient = redis.createClient(process.env.REDIS_PORT, process.env.REDIS_HOST);
+  const subClient = pubClient.duplicate();
+
+  io.adapter(redisAdapter({ pubClient, subClient }));
+}
 
 io.on("connection", (socket) => {
   ioDebug("connection established!");

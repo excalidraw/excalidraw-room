@@ -82,9 +82,7 @@ try {
       socketDebug(`${socket.id} has disconnected`);
       for (const roomID of socket.rooms) {
         const otherClients = (await io.in(roomID).fetchSockets()).filter(
-          (_socket) => {
-            return _socket.id !== socket.id;
-          },
+          (_socket) => _socket.id !== socket.id,
         );
 
         if (otherClients.length > 0) {

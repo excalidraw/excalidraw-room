@@ -78,6 +78,43 @@ try {
       },
     );
 
+    socket.on(
+      "on-user-follow",
+      async (payload: {
+        userToFollow: {
+          clientId: string;
+          username: string;
+        };
+        action: "subscribe" | "unsubscribe";
+      }) => {
+        const roomID = `follow_${payload.userToFollow.clientId}`;
+        switch (payload.action) {
+          case "subscribe":
+            console.log("subscribe");
+            await socket.join(roomID);
+            const sockets = await io.in(roomID).fetchSockets();
+            console.log(sockets.map((s) => s.id));
+
+            if (sockets.length === 1) {
+              io.to(payload.userToFollow.clientId).emit("broadcast-follow");
+            }
+
+            break;
+          case "unsubscribe":
+            console.log("unsubscribe");
+            await socket.leave(roomID);
+            const _sockets = await io.in(roomID).fetchSockets();
+            console.log(_sockets.map((s) => s.id));
+
+            if (_sockets.length === 0) {
+              io.to(payload.userToFollow.clientId).emit("broadcast-unfollow");
+            }
+
+            break;
+        }
+      },
+    );
+
     socket.on("disconnecting", async () => {
       socketDebug(`${socket.id} has disconnected`);
       for (const roomID in socket.rooms) {

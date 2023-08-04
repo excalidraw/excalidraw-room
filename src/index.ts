@@ -3,6 +3,12 @@ import express from "express";
 import http from "http";
 import { Server as SocketIO } from "socket.io";
 
+type UserToFollow = { clientId: string; username: string };
+type OnUserFollowedPayload = {
+  userToFollow: UserToFollow;
+  action: "follow" | "unfollow";
+};
+
 const serverDebug = debug("server");
 const ioDebug = debug("io");
 const socketDebug = debug("socket");
@@ -78,43 +84,31 @@ try {
       },
     );
 
-    socket.on(
-      "on-user-follow",
-      async (payload: {
-        userToFollow: {
-          clientId: string;
-          username: string;
-        };
-        action: "subscribe" | "unsubscribe";
-      }) => {
-        const roomID = `follow_${payload.userToFollow.clientId}`;
-        switch (payload.action) {
-          case "subscribe":
-            console.log("subscribe");
-            await socket.join(roomID);
-            const sockets = await io.in(roomID).fetchSockets();
-            console.log(sockets.map((s) => s.id));
+    socket.on("on-user-follow", async (payload: OnUserFollowedPayload) => {
+      const roomID = `follow_${payload.userToFollow.clientId}`;
+      switch (payload.action) {
+        case "follow":
+          await socket.join(roomID);
+          const sockets = await io.in(roomID).fetchSockets();
 
-            if (sockets.length === 1) {
-              io.to(payload.userToFollow.clientId).emit("broadcast-follow");
-            }
+          if (sockets.length === 1) {
+            io.to(payload.userToFollow.clientId).emit("broadcast-follow");
+          }
 
-            break;
-          case "unsubscribe":
-            console.log("unsubscribe");
-            await socket.leave(roomID);
-            const _sockets = await io.in(roomID).fetchSockets();
-            console.log(_sockets.map((s) => s.id));
+          break;
+        case "unfollow":
+          await socket.leave(roomID);
+          const _sockets = await io.in(roomID).fetchSockets();
 
-            if (_sockets.length === 0) {
-              io.to(payload.userToFollow.clientId).emit("broadcast-unfollow");
-            }
+          if (_sockets.length === 0) {
+            io.to(payload.userToFollow.clientId).emit("broadcast-unfollow");
+          }
 
-            break;
-        }
-      },
-    );
+          break;
+      }
+    });
 
+    // TODO follow-mode unfollow on disconnect?
     socket.on("disconnecting", async () => {
       socketDebug(`${socket.id} has disconnected`);
       for (const roomID in socket.rooms) {

@@ -108,7 +108,6 @@ try {
       }
     });
 
-    // TODO follow-mode unfollow on disconnect?
     socket.on("disconnecting", async () => {
       socketDebug(`${socket.id} has disconnected`);
       for (const roomID in socket.rooms) {
@@ -116,11 +115,18 @@ try {
           (_socket) => _socket.id !== socket.id,
         );
 
-        if (otherClients.length > 0) {
+        const isFollowRoom = roomID.startsWith("follow_");
+
+        if (!isFollowRoom && otherClients.length > 0) {
           socket.broadcast.to(roomID).emit(
             "room-user-change",
             otherClients.map((socket) => socket.id),
           );
+        }
+
+        if (isFollowRoom && otherClients.length === 0) {
+          const clientId = roomID.replace("follow_", "");
+          io.to(clientId).emit("broadcast-unfollow");
         }
       }
     });

@@ -110,7 +110,7 @@ try {
 
     socket.on("disconnecting", async () => {
       socketDebug(`${socket.id} has disconnected`);
-      for (const roomID in socket.rooms) {
+      for (const roomID of Array.from(socket.rooms)) {
         const otherClients = (await io.in(roomID).fetchSockets()).filter(
           (_socket) => _socket.id !== socket.id,
         );

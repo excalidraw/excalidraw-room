@@ -1,0 +1,41 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.231.2/containers/typescript-node
+{
+	"name": "Node.js & TypeScript",
+
+	// Update the 'dockerComposeFile' list if you have more compose files or use different names.
+	"dockerComposeFile": "../../docker-compose.yml",
+
+	"runServices": [],
+
+	"shutdownAction": "none",
+
+	// The 'service' property is the name of the service for the container that VS Code should
+	// use. Update this value and .devcontainer/docker-compose.yml to the real service name.
+	"service": "excalidraw-room",
+
+	// The optional 'workspaceFolder' property is the path VS Code should open by default when
+	// connected. This is typically a volume mount in .devcontainer/docker-compose.yml
+	"workspaceFolder": "/workspace/packages/excalidraw-room",
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": {},
+
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"dbaeumer.vscode-eslint",
+		"eamodio.gitlens",
+		"mutantdino.resourcemonitor",
+		"wmaurer.change-case"
+	],
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [3000],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "",
+
+	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "node"
+}

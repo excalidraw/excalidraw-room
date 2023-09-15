@@ -19,7 +19,7 @@ const port =
 
 app.use(express.static("public"));
 
-app.get("/", (req, res) => {
+app.get((process.env.BASE_PATH ? process.env.BASE_PATH : "/"), (req, res) => {
   res.send("Excalidraw collaboration server is up :)");
 });
 
@@ -38,6 +38,7 @@ try {
       credentials: true,
     },
     allowEIO3: true,
+    ...(process.env.BASE_PATH ? {path: process.env.BASE_PATH + "/socket.io/"} : {}),
   });
 
   io.on("connection", (socket) => {

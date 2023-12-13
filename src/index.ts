@@ -46,14 +46,6 @@ try {
     allowEIO3: true,
   });
 
-  // we want to keep track of the last position of the followed user's scene
-  // bounds so that we can send it to the new follower without having to
-  // make an interaction on the scene
-  const withLatestSceneBounds = new Map<
-    string,
-    { data: ArrayBuffer; iv: Uint8Array }
-  >();
-
   io.on("connection", (socket) => {
     ioDebug("connection established!");
     io.to(`${socket.id}`).emit("init-room");
@@ -85,9 +77,6 @@ try {
     socket.on(
       "server-volatile-broadcast",
       (roomID: string, encryptedData: ArrayBuffer, iv: Uint8Array) => {
-        if (roomID.startsWith("follow_")) {
-          withLatestSceneBounds.set(roomID, { data: encryptedData, iv });
-        }
         socketDebug(`${socket.id} sends volatile update to ${roomID}`);
         socket.volatile.broadcast
           .to(roomID)
@@ -100,17 +89,6 @@ try {
       switch (payload.action) {
         case "follow":
           await socket.join(roomID);
-
-          // Immediately send the latest scene bounds to the new follower
-          // without having to wait for a scene interaction
-          const latestSceneBounds = withLatestSceneBounds.get(roomID);
-          if (latestSceneBounds) {
-            io.to(socket.id).emit(
-              "client-broadcast",
-              latestSceneBounds.data,
-              latestSceneBounds.iv,
-            );
-          }
 
           const sockets = await io.in(roomID).fetchSockets();
           const followedBy = sockets.map((socket) => socket.id);
@@ -133,11 +111,6 @@ try {
             "follow-room-user-change",
             _followedBy,
           );
-
-          // cleanup
-          if (_sockets.length === 0) {
-            withLatestSceneBounds.delete(roomID);
-          }
 
           break;
       }

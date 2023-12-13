@@ -5,7 +5,6 @@ import { Server as SocketIO } from "socket.io";
 
 type UserToFollow = {
   socketId: string;
-  userId: string | null;
   username: string;
 };
 type OnUserFollowedPayload = {

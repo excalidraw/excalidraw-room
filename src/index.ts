@@ -3,7 +3,11 @@ import express from "express";
 import http from "http";
 import { Server as SocketIO } from "socket.io";
 
-type UserToFollow = { clientId: string; username: string };
+type UserToFollow = {
+  socketId: string;
+  userId: string | null;
+  username: string;
+};
 type OnUserFollowedPayload = {
   userToFollow: UserToFollow;
   action: "follow" | "unfollow";
@@ -85,7 +89,7 @@ try {
     );
 
     socket.on("on-user-follow", async (payload: OnUserFollowedPayload) => {
-      const roomID = `follow_${payload.userToFollow.clientId}`;
+      const roomID = `follow_${payload.userToFollow.socketId}`;
       switch (payload.action) {
         case "follow":
           await socket.join(roomID);
@@ -96,7 +100,7 @@ try {
           // Notify the user to follow that someone has followed them
           // More precisely, send the list of users that are following them
           // so that they can make decisions based on that
-          io.to(payload.userToFollow.clientId).emit(
+          io.to(payload.userToFollow.socketId).emit(
             "follow-room-user-change",
             followedBy,
           );
@@ -107,7 +111,7 @@ try {
           const _sockets = await io.in(roomID).fetchSockets();
           const _followedBy = _sockets.map((socket) => socket.id);
 
-          io.to(payload.userToFollow.clientId).emit(
+          io.to(payload.userToFollow.socketId).emit(
             "follow-room-user-change",
             _followedBy,
           );
@@ -133,8 +137,8 @@ try {
         }
 
         if (isFollowRoom && otherClients.length === 0) {
-          const clientId = roomID.replace("follow_", "");
-          io.to(clientId).emit("broadcast-unfollow");
+          const socketId = roomID.replace("follow_", "");
+          io.to(socketId).emit("broadcast-unfollow");
         }
       }
     });

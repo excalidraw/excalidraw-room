@@ -9,7 +9,7 @@ type UserToFollow = {
 };
 type OnUserFollowedPayload = {
   userToFollow: UserToFollow;
-  action: "follow" | "unfollow";
+  action: "FOLLOW" | "UNFOLLOW";
 };
 
 const serverDebug = debug("server");
@@ -87,35 +87,36 @@ try {
       },
     );
 
-    socket.on("on-user-follow", async (payload: OnUserFollowedPayload) => {
+    socket.on("user-follow", async (payload: OnUserFollowedPayload) => {
       const roomID = `follow_${payload.userToFollow.socketId}`;
+
       switch (payload.action) {
-        case "follow":
+        case "FOLLOW": {
           await socket.join(roomID);
 
           const sockets = await io.in(roomID).fetchSockets();
           const followedBy = sockets.map((socket) => socket.id);
 
-          // Notify the user to follow that someone has followed them
-          // More precisely, send the list of users that are following them
-          // so that they can make decisions based on that
           io.to(payload.userToFollow.socketId).emit(
-            "follow-room-user-change",
+            "user-follow-room-change",
             followedBy,
           );
 
           break;
-        case "unfollow":
+        }
+        case "UNFOLLOW": {
           await socket.leave(roomID);
-          const _sockets = await io.in(roomID).fetchSockets();
-          const _followedBy = _sockets.map((socket) => socket.id);
+
+          const sockets = await io.in(roomID).fetchSockets();
+          const followedBy = sockets.map((socket) => socket.id);
 
           io.to(payload.userToFollow.socketId).emit(
-            "follow-room-user-change",
-            _followedBy,
+            "user-follow-room-change",
+            followedBy,
           );
 
           break;
+        }
       }
     });
 

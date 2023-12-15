@@ -3,6 +3,15 @@ import express from "express";
 import http from "http";
 import { Server as SocketIO } from "socket.io";
 
+type UserToFollow = {
+  socketId: string;
+  username: string;
+};
+type OnUserFollowedPayload = {
+  userToFollow: UserToFollow;
+  action: "FOLLOW" | "UNFOLLOW";
+};
+
 const serverDebug = debug("server");
 const ioDebug = debug("io");
 const socketDebug = debug("socket");
@@ -78,18 +87,58 @@ try {
       },
     );
 
+    socket.on("user-follow", async (payload: OnUserFollowedPayload) => {
+      const roomID = `follow@${payload.userToFollow.socketId}`;
+
+      switch (payload.action) {
+        case "FOLLOW": {
+          await socket.join(roomID);
+
+          const sockets = await io.in(roomID).fetchSockets();
+          const followedBy = sockets.map((socket) => socket.id);
+
+          io.to(payload.userToFollow.socketId).emit(
+            "user-follow-room-change",
+            followedBy,
+          );
+
+          break;
+        }
+        case "UNFOLLOW": {
+          await socket.leave(roomID);
+
+          const sockets = await io.in(roomID).fetchSockets();
+          const followedBy = sockets.map((socket) => socket.id);
+
+          io.to(payload.userToFollow.socketId).emit(
+            "user-follow-room-change",
+            followedBy,
+          );
+
+          break;
+        }
+      }
+    });
+
     socket.on("disconnecting", async () => {
       socketDebug(`${socket.id} has disconnected`);
-      for (const roomID in socket.rooms) {
+      for (const roomID of Array.from(socket.rooms)) {
         const otherClients = (await io.in(roomID).fetchSockets()).filter(
           (_socket) => _socket.id !== socket.id,
         );
 
-        if (otherClients.length > 0) {
+        const isFollowRoom = roomID.startsWith("follow@");
+
+        if (!isFollowRoom && otherClients.length > 0) {
           socket.broadcast.to(roomID).emit(
             "room-user-change",
             otherClients.map((socket) => socket.id),
           );
+        }
+
+        if (isFollowRoom && otherClients.length === 0) {
+          const socketId = roomID.replace("follow@", "");
+          io.to(socketId).emit("broadcast-unfollow");
         }
       }
     });

@@ -88,7 +88,7 @@ try {
     );
 
     socket.on("user-follow", async (payload: OnUserFollowedPayload) => {
-      const roomID = `follow_${payload.userToFollow.socketId}`;
+      const roomID = `follow@${payload.userToFollow.socketId}`;
 
       switch (payload.action) {
         case "FOLLOW": {
@@ -127,7 +127,7 @@ try {
           (_socket) => _socket.id !== socket.id,
         );
 
-        const isFollowRoom = roomID.startsWith("follow_");
+        const isFollowRoom = roomID.startsWith("follow@");
 
         if (!isFollowRoom && otherClients.length > 0) {
           socket.broadcast.to(roomID).emit(
@@ -137,7 +137,7 @@ try {
         }
 
         if (isFollowRoom && otherClients.length === 0) {
-          const socketId = roomID.replace("follow_", "");
+          const socketId = roomID.replace("follow@", "");
           io.to(socketId).emit("broadcast-unfollow");
         }
       }

@@ -1,7 +1,11 @@
+// server.js
+
 import debug from "debug";
 import express from "express";
 import http from "http";
 import { Server as SocketIO } from "socket.io";
+import { createAdapter } from "@socket.io/redis-adapter";
+import * as redis from "redis";
 
 type UserToFollow = {
   socketId: string;
@@ -48,6 +52,24 @@ try {
     },
     allowEIO3: true,
   });
+
+  //Condition for check if need to enable redis IO  adapter for socket
+  if (process.env.SETUP_REDIS_IO_ADAPTER === "true") {    
+    // Create a Redis client
+    const pubClient = redis.createClient({
+      url: String(process.env.REDIS_HOST),
+      socket: { port: 6379 },
+    });
+
+    // Create the Redis adapter
+    const subClient = pubClient.duplicate();
+    io.adapter(createAdapter(pubClient, subClient));
+
+    Promise.all([pubClient.connect(), subClient.connect()]).then(() => {
+      io.adapter(createAdapter(pubClient, subClient));
+      io.listen(3000);
+    });
+  }
 
   io.on("connection", (socket) => {
     ioDebug("connection established!");
